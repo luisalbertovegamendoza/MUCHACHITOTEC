@@ -1,18 +1,38 @@
 from django.shortcuts import render
 
-# Create your views here.
-#from django.shortcuts import render
-#from django.urls import reverse_lazy
-from django.views.generic import (TemplateView , DetailView,ListView , CreateView , UpdateView , DeleteView)
-#from .models import Producto
-from .models import Producto
+
+from django.views.generic import (DetailView,ListView , CreateView , UpdateView , DeleteView)
+from django.shortcuts import get_object_or_404
+from .models import Producto, Category
 
 
 
-class PruebaListView(ListView):
-    template_name= 'camara/index.html'
-    model=Producto
-    context_object_name = 'lista'  
+class HomeView(ListView):
+    model = Category
+    template_name = 'home.html'
+    context_object_name = 'categorias'
+    
+class ProductosPorCategoriaListView(ListView):
+    model = Producto
+    template_name = 'camara/lista_categoria.html'
+    context_object_name = 'productos'
+
+    def get_queryset(self):
+        self.categoria = get_object_or_404(
+            Category,
+            slug=self.kwargs['slug']
+        )
+        return Producto.objects.filter(
+            category=self.categoria,
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categoria'] = self.categoria
+        return context
+    
+    
+    
 
 class ProductoDetailView(DetailView):
     model=Producto  # Modelo que usará

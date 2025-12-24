@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cámaras | JJ Tecnología</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{% static 'css/styless.css' %}" />
+  </head>
+
+  <body class="d-flex flex-column min-vh-100 page-camaras">
+    <!-- ✅ HEADER -->
+    {% include 'common/header.html' %}
+
+    <!-- ✅ CONTENIDO PRINCIPAL -->
+    {% block content %}
+
+    <h2>{{ categoria.name }}</h2>
+
+<div class="productos">
+    {% for producto in productos %}
+        <div class="card">
+            {% if producto.imagen %}
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+            {% endif %}
+
+            <h3>{{ producto.nombre }}</h3>
+            <p>S/ {{ producto.precio }}</p>
+
+            <a href="{% url 'producto_detalle' producto.pk %}">
+                Ver detalle
+            </a>
+        </div>
+    {% empty %}
+        <p>No hay productos en esta categoría.</p>
+    {% endfor %}
+</div>
+    
+    {% endblock %}
+
+    <!-- ✅ FOOTER -->
+    {% include 'common/footer.html' %}
+
+    <!-- Font Awesome -->
+    <script
+      src="https://kit.fontawesome.com/d2c4ea8abb.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
