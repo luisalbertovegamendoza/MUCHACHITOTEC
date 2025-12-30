@@ -1,13 +1,12 @@
 from django.urls import path
 from .views import ProductosPorCategoriaListView, ProductoDetailView
-from .views import HomeView
 
+
+app_name = 'camara'
 
 
 urlpatterns = [
     
-    path('', HomeView.as_view(), name='home'),
-
     path(
         'categoria/<slug:slug>/',
         ProductosPorCategoriaListView.as_view(),

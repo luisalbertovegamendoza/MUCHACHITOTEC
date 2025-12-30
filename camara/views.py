@@ -7,14 +7,10 @@ from .models import Producto, Category
 
 
 
-class HomeView(ListView):
-    model = Category
-    template_name = 'home.html'
-    context_object_name = 'categorias'
     
 class ProductosPorCategoriaListView(ListView):
     model = Producto
-    template_name = 'camara/lista_categoria.html'
+    template_name = 'camara/listar_categoria.html'
     context_object_name = 'productos'
 
     def get_queryset(self):
@@ -22,6 +18,12 @@ class ProductosPorCategoriaListView(ListView):
             Category,
             slug=self.kwargs['slug']
         )
+
+
+        # ✅ GUARDAR LA CATEGORÍA EN SESSION
+        self.request.session['ultima_categoria'] = self.categoria.slug
+
+
         return Producto.objects.filter(
             category=self.categoria,
         )

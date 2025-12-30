@@ -31,25 +31,30 @@
 
     <h2>{{ categoria.name }}</h2>
 
-<div class="productos">
-    {% for producto in productos %}
-        <div class="card">
-            {% if producto.imagen %}
-                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-            {% endif %}
+    <div class="productos">
+      {% for producto in productos %}
+      <div class="card">
+        {% if producto.imagen %}
+        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" />
+        {% endif %}
 
-            <h3>{{ producto.nombre }}</h3>
-            <p>S/ {{ producto.precio }}</p>
+        <h3>{{ producto.nombre }}</h3>
+        <p>S/ {{ producto.precio }}</p>
 
-            <a href="{% url 'producto_detalle' producto.pk %}">
-                Ver detalle
-            </a>
+        <a href="{% url 'camara:producto_detalle' producto.pk %}">
+          Ver detalle
+        </a>
+        <div class="d-flex justify-content-end mb-3">
+          <a href="{% url 'carrito:ver_carrito' %}" class="btn btn-success">
+            🛒 Ver carrito
+          </a>
         </div>
-    {% empty %}
-        <p>No hay productos en esta categoría.</p>
-    {% endfor %}
-</div>
-    
+      </div>
+      {% empty %}
+      <p>No hay productos en esta categoría.</p>
+      {% endfor %}
+    </div>
+
     {% endblock %}
 
     <!-- ✅ FOOTER -->

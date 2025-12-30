@@ -84,12 +84,22 @@
 
           <div class="d-grid gap-2 mt-3">
             <!-- Seguir Comprando -->
+
+            {% if request.session.ultima_categoria %}
             <a
-              href="{% url 'listar_camara' %}"
-              class="btn btn-outline-light btn-lg d-flex align-items-center justify-content-center"
+              href="{% url 'camara:productos_categoria' request.session.ultima_categoria %}"
+              class="btn btn-outline-light btn-lg"
             >
               Seguir Comprando
             </a>
+            {% else %}
+            <a
+              href="javascript:history.back()"
+              class="btn btn-outline-light btn-lg"
+            >
+              Seguir Comprando
+            </a>
+            {% endif %}
 
             <!-- Pagar con PayPal -->
             <form
@@ -120,8 +130,8 @@
         {% else %}
         <div class="text-center py-5">
           <h4>Tu carrito está vacío 😔</h4>
-          <a href="{% url 'listar_camara' %}" class="btn btn-outline-light mt-3"
-            >Ver Productos</a
+          <a href="{% url 'camara:productos_categoria' 'camaras' %}">
+            Ver Productos</a
           >
         </div>
         {% endif %}
