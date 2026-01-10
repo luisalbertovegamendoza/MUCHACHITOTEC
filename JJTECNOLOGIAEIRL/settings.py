@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'camara',
     'carrito',
+    'contacto',
+    'chatbot',
     
     
 ]
@@ -125,8 +127,13 @@ USE_TZ = True
 
 STATIC_URL = 'static/'  # ARCHIVOS ESTATICOS JS CSS E IMAGENES
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # PARA PRODUCCION
+
+
+#STATIC_ROOT = BASE_DIR / 'staticfiles'  # PARA PRODUCCION
 
 
 MEDIA_URL='/media/'  # PARA IMAGENES
@@ -140,11 +147,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-# Directorio donde Django buscará archivos estáticos
-# (Necesario para la fase de producción/despliegue)
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

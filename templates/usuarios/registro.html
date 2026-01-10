@@ -1,98 +1,70 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registro | JJ Tecnología</title>
+{% extends 'base.html' %} {% load static %} {% block title %}Título de la
+página{% endblock %} {% block content %}
 
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="{% static 'css/styless.css' %}" />
-  </head>
-  <body class="d-flex flex-column min-vh-100">
-    {% include 'common/header.html' %}
-
-    <main
-      class="flex-grow-1 d-flex align-items-center justify-content-center main-bg py-5"
+<main
+  class="flex-grow-1 d-flex align-items-center justify-content-center main-bg py-5"
+>
+  {% if messages %}
+  <div
+    class="position-fixed top-0 start-50 translate-middle-x mt-3"
+    style="z-index: 1050; width: 400px"
+  >
+    {% for message in messages %}
+    <div
+      class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show"
+      role="alert"
     >
-      {% if messages %}
-      <div
-        class="position-fixed top-0 start-50 translate-middle-x mt-3"
-        style="z-index: 1050; width: 400px"
-      >
-        {% for message in messages %}
-        <div
-          class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show"
-          role="alert"
-        >
-          {{ message }}
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-          ></button>
-        </div>
-        {% endfor %}
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div
+    class="card shadow-lg p-4"
+    style="max-width: 400px; width: 100%; border-radius: 15px"
+  >
+    <h3 class="text-center mb-4 text-info fw-bold">Crear Cuenta</h3>
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="username" class="form-label fw-semibold">Usuario</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          class="form-control"
+          placeholder="Elija un nombre de usuario"
+          required
+        />
       </div>
-      {% endif %}
 
-      <div
-        class="card shadow-lg p-4"
-        style="max-width: 400px; width: 100%; border-radius: 15px"
-      >
-        <h3 class="text-center mb-4 text-info fw-bold">Crear Cuenta</h3>
-
-        <form method="POST">
-          {% csrf_token %}
-          <div class="mb-3">
-            <label for="username" class="form-label fw-semibold">Usuario</label>
-            <input
-              type="text"
-              name="username"
-              id="username"
-              class="form-control"
-              placeholder="Elija un nombre de usuario"
-              required
-            />
-          </div>
-
-          <div class="mb-3">
-            <label for="password" class="form-label fw-semibold"
-              >Contraseña</label
-            >
-            <input
-              type="password"
-              name="password"
-              id="password"
-              class="form-control"
-              placeholder="Cree una contraseña segura"
-              required
-            />
-          </div>
-
-          <button type="submit" class="btn btn-success w-100 fw-bold">
-            <i class="fa-solid fa-user-plus me-1"></i> Registrarse
-          </button>
-        </form>
-
-        <p class="text-center mt-3 text-secondary small">
-          ¿Ya tienes cuenta?
-          <a href="{% url 'login' %}" class="text-info fw-semibold"
-            >Inicia sesión aquí</a
-          >
-        </p>
+      <div class="mb-3">
+        <label for="password" class="form-label fw-semibold">Contraseña</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          class="form-control"
+          placeholder="Cree una contraseña segura"
+          required
+        />
       </div>
-    </main>
 
-    {% include 'common/footer.html' %}
+      <button type="submit" class="btn btn-success w-100 fw-bold">
+        <i class="fa-solid fa-user-plus me-1"></i> Registrarse
+      </button>
+    </form>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  </body>
-</html>
+    <p class="text-center mt-3 text-secondary small">
+      ¿Ya tienes cuenta?
+      <a href="{% url 'login' %}" class="text-info fw-semibold"
+        >Inicia sesión aquí</a
+      >
+    </p>
+  </div>
+</main>
+
+{% endblock %}

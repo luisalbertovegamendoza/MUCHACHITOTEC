@@ -7,12 +7,12 @@
       href="{% url 'index' %}"
     >
       <img
-        src="{% static 'img/logo.jpeg' %}"
+        src="{% static 'img/logo2.jpeg' %}"
         alt="Logo de la empresa"
         class="logo-navbar mb-1"
       />
       <span class="brand-name fw-bold">Muchachito TEC</span>
-      <span class="brand-slogan small">Conectamos tu vida con el futuro</span>
+      <span class="brand-slogan">Tu pata en tecnología</span>
     </a>
 
     <!-- Botón hamburguesa (Responsive) -->
@@ -36,7 +36,7 @@
             class="nav-link navigation-icon"
             href="{% url 'camara:productos_categoria' 'audio' %}"
           >
-            Audio
+            Estudio y Trabajo
           </a>
         </li>
 
@@ -45,7 +45,7 @@
             class="nav-link navigation-icon"
             href="{% url 'camara:productos_categoria' 'celulares' %}"
           >
-            Celulares y Accesorios
+            Celulares y Uso Diario
           </a>
         </li>
 
@@ -54,7 +54,7 @@
             class="nav-link navigation-icon"
             href="{% url 'camara:productos_categoria' 'gammer' %}"
           >
-            Gamer
+            Gamming
           </a>
         </li>
 
@@ -63,8 +63,18 @@
             class="nav-link navigation-icon"
             href="{% url 'camara:productos_categoria' 'computo' %}"
           >
-            Cómputo
+            Combos Recomendados
           </a>
+        </li>
+
+        <li class="nav-item mx-2">
+          <button
+            class="btn btn-outline-light btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#contactoModal"
+          >
+            📩 Contacto
+          </button>
         </li>
 
         <!-- Carrito -->

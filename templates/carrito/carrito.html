@@ -49,9 +49,12 @@
                     <span>{{ item.nombre }}</span>
                   </div>
                 </td>
-                <td>$ {{ item.precio }}</td>
+                <td>S/ {{ item.precio|floatformat:2 }}</td>
+
                 <td>{{ item.cantidad }}</td>
-                <td>$ {% widthratio item.precio 1 item.cantidad %}</td>
+
+                <td>S/ {{ item.subtotal|floatformat:2 }}</td>
+
                 <td>
                   <div class="btn-group" role="group">
                     <a
@@ -129,10 +132,20 @@
 
         {% else %}
         <div class="text-center py-5">
-          <h4>Tu carrito está vacío 😔</h4>
-          <a href="{% url 'camara:productos_categoria' 'camaras' %}">
-            Ver Productos</a
+          <h4 class="mb-3">Tu carrito está vacío 😔</h4>
+
+          {% if request.session.ultima_categoria %}
+          <a
+            href="{% url 'camara:productos_categoria' request.session.ultima_categoria %}"
+            class="btn btn-outline-light btn-lg mt-2"
           >
+            <i class="fa-solid fa-arrow-left me-2"></i> Volver a productos
+          </a>
+          {% else %}
+          <a href="/" class="btn btn-outline-light btn-lg mt-2">
+            <i class="fa-solid fa-house me-2"></i> Ir al inicio
+          </a>
+          {% endif %}
         </div>
         {% endif %}
       </div>

@@ -26,7 +26,7 @@
           </div>
           <div class="col-12 col-md-6">
             <h2 class="fw-bold text-primary">{{ producto.nombre }}</h2>
-            <p class="text-muted">{{ producto.detalle }}</p>
+            <p class="card-title">{{ producto.detalle }}</p>
             <h4 class="text-success fw-bold mb-4">S/ {{ producto.precio }}</h4>
             <a
               href="{% url 'carrito:agregar_carrito' producto.id %}"

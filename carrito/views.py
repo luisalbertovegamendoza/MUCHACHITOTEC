@@ -16,14 +16,6 @@ from django.contrib import messages # mostrar mensajes en django
 
 def agregar_carrito(request, producto_id):
 
-    if not request.user.is_authenticated:
-        messages.warning(
-            request,
-            'Debes iniciar sesion para agregar productos al carrito'
-        )
-        return redirect('login')
-    
-
     carrito = Carrito(request)
     producto = get_object_or_404(Producto, id=producto_id)
     carrito.agregar(producto)
@@ -109,6 +101,7 @@ def pagar_paypal(request):
         return HttpResponse("Error: No se encontró la URL de aprobación de PayPal.")
     else:
         return HttpResponse("Error al crear el pago con PayPal.")
+    
 def pago_exitoso(request):
     carrito = Carrito(request)
     carrito.limpiar()
