@@ -1,158 +1,135 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Carrito de Compras | JJ Tecnología</title>
+{% extends 'base.html' %} {% load static %} {% block title %}Título de la
+página{% endblock %} {% block content %}
 
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="{% static 'css/styless.css' %}" />
-  </head>
-  <body class="d-flex flex-column min-vh-100">
-    {% include 'common/header.html' %}
+<main class="flex-grow-1 py-5 main-bg text-white">
+  <div class="container">
+    <h2 class="text-center mb-4">🛒 Carrito de Compras</h2>
 
-    <main class="flex-grow-1 py-5 main-bg text-white">
-      <div class="container">
-        <h2 class="text-center mb-4">🛒 Carrito de Compras</h2>
+    {% if carrito %}
+    <div class="table-responsive">
+      <table class="table table-dark table-hover align-middle">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key, item in carrito.items %}
+          <tr>
+            <td>
+              <div class="d-flex align-items-center">
+                <img
+                  src="{{ item.imagen }}"
+                  alt="{{ item.nombre }}"
+                  class="me-3 rounded"
+                  style="width: 70px; height: 70px; object-fit: cover"
+                />
+                <span>{{ item.nombre }}</span>
+              </div>
+            </td>
+            <td>S/ {{ item.precio|floatformat:2 }}</td>
 
-        {% if carrito %}
-        <div class="table-responsive">
-          <table class="table table-dark table-hover align-middle">
-            <thead>
-              <tr>
-                <th>Producto</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Subtotal</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for key, item in carrito.items %}
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <img
-                      src="{{ item.imagen }}"
-                      alt="{{ item.nombre }}"
-                      class="me-3 rounded"
-                      style="width: 70px; height: 70px; object-fit: cover"
-                    />
-                    <span>{{ item.nombre }}</span>
-                  </div>
-                </td>
-                <td>S/ {{ item.precio|floatformat:2 }}</td>
+            <td>{{ item.cantidad }}</td>
 
-                <td>{{ item.cantidad }}</td>
+            <td>S/ {{ item.subtotal|floatformat:2 }}</td>
 
-                <td>S/ {{ item.subtotal|floatformat:2 }}</td>
+            <td>
+              <div class="btn-group" role="group">
+                <a
+                  href="{% url 'carrito:agregar_carrito' item.producto_id %}"
+                  class="btn btn-sm btn-success"
+                  >+</a
+                >
+                <a
+                  href="{% url 'carrito:restar_carrito' item.producto_id %}"
+                  class="btn btn-sm btn-warning"
+                  >–</a
+                >
+                <a
+                  href="{% url 'carrito:eliminar_carrito' item.producto_id %}"
+                  class="btn btn-sm btn-danger"
+                  >Eliminar</a
+                >
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
-                <td>
-                  <div class="btn-group" role="group">
-                    <a
-                      href="{% url 'carrito:agregar_carrito' item.producto_id %}"
-                      class="btn btn-sm btn-success"
-                      >+</a
-                    >
-                    <a
-                      href="{% url 'carrito:restar_carrito' item.producto_id %}"
-                      class="btn btn-sm btn-warning"
-                      >–</a
-                    >
-                    <a
-                      href="{% url 'carrito:eliminar_carrito' item.producto_id %}"
-                      class="btn btn-sm btn-danger"
-                      >Eliminar</a
-                    >
-                  </div>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+    <div class="text-end mt-4">
+      <h4 class="fw-bold">
+        Total: <span class="text-info">S/ {{ total|floatformat:2 }}</span>
+      </h4>
 
-        <div class="text-end mt-4">
-          <h4 class="fw-bold">
-            Total: <span class="text-info">S/ {{ total|floatformat:2 }}</span>
-          </h4>
+      <div class="d-grid gap-2 mt-3">
+        <!-- Seguir Comprando -->
 
-          <div class="d-grid gap-2 mt-3">
-            <!-- Seguir Comprando -->
-
-            {% if request.session.ultima_categoria %}
-            <a
-              href="{% url 'camara:productos_categoria' request.session.ultima_categoria %}"
-              class="btn btn-outline-light btn-lg"
-            >
-              Seguir Comprando
-            </a>
-            {% else %}
-            <a
-              href="javascript:history.back()"
-              class="btn btn-outline-light btn-lg"
-            >
-              Seguir Comprando
-            </a>
-            {% endif %}
-
-            <!-- Pagar con PayPal -->
-            <form
-              action="{% url 'carrito:pagar_paypal' %}"
-              method="POST"
-              class="d-flex"
-            >
-              {% csrf_token %}
-              <input type="hidden" name="total" value="{{ total }}" />
-              <button
-                type="submit"
-                class="btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100"
-              >
-                <i class="fa-brands fa-paypal me-2"></i> Pagar con PayPal
-              </button>
-            </form>
-
-            <!-- Pagar con Yape -->
-            <a
-              href="{% url 'carrito:pagar_yape' %}?total={{ total }}"
-              class="btn btn-success btn-lg d-flex align-items-center justify-content-center"
-            >
-              <i class="fas fa-mobile-screen-button me-2"></i> Pagar con Yape
-            </a>
-          </div>
-        </div>
-
+        {% if request.session.ultima_categoria %}
+        <a
+          href="{% url 'camara:productos_categoria' request.session.ultima_categoria %}"
+          class="btn btn-outline-light btn-lg"
+        >
+          Seguir Comprando
+        </a>
         {% else %}
-        <div class="text-center py-5">
-          <h4 class="mb-3">Tu carrito está vacío 😔</h4>
-
-          {% if request.session.ultima_categoria %}
-          <a
-            href="{% url 'camara:productos_categoria' request.session.ultima_categoria %}"
-            class="btn btn-outline-light btn-lg mt-2"
-          >
-            <i class="fa-solid fa-arrow-left me-2"></i> Volver a productos
-          </a>
-          {% else %}
-          <a href="/" class="btn btn-outline-light btn-lg mt-2">
-            <i class="fa-solid fa-house me-2"></i> Ir al inicio
-          </a>
-          {% endif %}
-        </div>
+        <a
+          href="javascript:history.back()"
+          class="btn btn-outline-light btn-lg"
+        >
+          Seguir Comprando
+        </a>
         {% endif %}
+
+        <!-- Pagar con PayPal -->
+        <form
+          action="{% url 'carrito:pagar_paypal' %}"
+          method="POST"
+          class="d-flex"
+        >
+          {% csrf_token %}
+          <input type="hidden" name="total" value="{{ total }}" />
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100"
+          >
+            <i class="fa-brands fa-paypal me-2"></i> Pagar con PayPal
+          </button>
+        </form>
+
+        <!-- Pagar con Yape -->
+        <a
+          href="{% url 'carrito:pagar_yape' %}?total={{ total }}"
+          class="btn btn-success btn-lg d-flex align-items-center justify-content-center"
+        >
+          <i class="fas fa-mobile-screen-button me-2"></i> Pagar con Yape
+        </a>
       </div>
-    </main>
+    </div>
 
-    {% include 'common/footer.html' %}
+    {% else %}
+    <div class="text-center py-5">
+      <h4 class="mb-3">Tu carrito está vacío 😔</h4>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  </body>
-</html>
+      {% if request.session.ultima_categoria %}
+      <a
+        href="{% url 'camara:productos_categoria' request.session.ultima_categoria %}"
+        class="btn btn-outline-light btn-lg mt-2"
+      >
+        <i class="fa-solid fa-arrow-left me-2"></i> Volver a productos
+      </a>
+      {% else %}
+      <a href="/" class="btn btn-outline-light btn-lg mt-2">
+        <i class="fa-solid fa-house me-2"></i> Ir al inicio
+      </a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</main>
+{% endblock %}

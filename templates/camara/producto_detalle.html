@@ -1,57 +1,36 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ producto.nombre }} | Detalle</title>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="{% static 'css/styless.css' %}" />
-  </head>
-  <body class="d-flex flex-column min-vh-100">
-    {% include 'common/header.html' %}
+{% extends 'base.html' %} {% load static %} {% block title %}Título de la
+página{% endblock %} {% block content %}
 
-    <main class="flex-grow-1 py-5 main-bg">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-12 col-md-6 mb-4">
-            <img
-              src="{{ producto.imagen.url }}"
-              alt="{{ producto.nombre }}"
-              class="img-fluid rounded shadow"
-            />
-          </div>
-          <div class="col-12 col-md-6">
-            <h2 class="fw-bold text-primary">{{ producto.nombre }}</h2>
-            <p class="card-title">{{ producto.detalle }}</p>
-            <h4 class="text-success fw-bold mb-4">S/ {{ producto.precio }}</h4>
-            <a
-              href="{% url 'carrito:agregar_carrito' producto.id %}"
-              class="btn btn-warning btn-lg rounded-pill w-100 mb-2"
-            >
-              <i class="fas fa-cart-plus me-2"></i> Agregar al carrito
-            </a>
-
-            <a
-              href="javascript:history.back()"
-              class="btn btn-outline-secondary mt-3"
-            >
-              ⬅ Volver a productos
-            </a>
-          </div>
-        </div>
+<main class="flex-grow-1 py-5 main-bg">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-6 mb-4">
+        <img
+          src="{{ producto.imagen.url }}"
+          alt="{{ producto.nombre }}"
+          class="img-fluid rounded shadow"
+        />
       </div>
-    </main>
+      <div class="col-12 col-md-6">
+        <h2 class="fw-bold text-primary">{{ producto.nombre }}</h2>
+        <p class="card-title">{{ producto.detalle }}</p>
+        <h4 class="text-success fw-bold mb-4">S/ {{ producto.precio }}</h4>
+        <a
+          href="{% url 'carrito:agregar_carrito' producto.id %}"
+          class="btn btn-warning btn-lg rounded-pill w-100 mb-2"
+        >
+          <i class="fas fa-cart-plus me-2"></i> Agregar al carrito
+        </a>
 
-    {% include 'common/footer.html' %}
+        <a
+          href="javascript:history.back()"
+          class="btn btn-outline-secondary mt-3"
+        >
+          ⬅ Volver a productos
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
 
-    <script
-      src="https://kit.fontawesome.com/d2c4ea8abb.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  </body>
-</html>
+{% endblock %}
