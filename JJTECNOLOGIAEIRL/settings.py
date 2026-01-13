@@ -12,7 +12,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-import JJTECNOLOGIAEIRL.paypal_config
+
+try:
+    import JJTECNOLOGIAEIRL.paypal_config
+except Exception as e:
+    print("PayPal config not loaded:", e)
+
 
 
 
@@ -36,9 +41,14 @@ SECRET_KEY = os.environ.get(
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS =  os.environ.get("ALLOWED_HOSTS", "").split(",")
 
 
+
+
+ALLOWED_HOSTS = os.environ.get(
+    "ALLOWED_HOSTS",
+    "localhost,127.0.0.1,.onrender.com"
+).split(",")
 
 
 # Application definition
@@ -148,9 +158,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+if DEBUG:
+    STATICFILES_DIRS = [BASE_DIR / 'static']
+else:
+    STATICFILES_DIRS = []
+
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
@@ -187,5 +199,7 @@ LOGIN_URL = '/login/'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+
+
+CSRF_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_SECURE = not DEBUG
