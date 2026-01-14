@@ -163,8 +163,9 @@ STATICFILES_DIRS = [BASE_DIR / 'static'] if DEBUG else []
 
 
 
-STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 
