@@ -39,7 +39,7 @@ SECRET_KEY = os.environ.get(
     'unsafe-secret-key'
 )
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 
 
@@ -47,9 +47,9 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.environ.get(
     "ALLOWED_HOSTS",
-    'localhost,127.0.0.1,muchachitotec.onrender.com'
-
+    ".onrender.com,localhost,127.0.0.1"
 ).split(",")
+
 
 
 # Application definition
@@ -162,9 +162,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static'] if DEBUG else []
 
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
 
 
