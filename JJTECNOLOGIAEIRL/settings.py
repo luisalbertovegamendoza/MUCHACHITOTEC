@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cloudinary',
-    'cloudinary_storage',
     'camara',
     'carrito',
     'contacto',
@@ -212,4 +211,4 @@ CSRF_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
