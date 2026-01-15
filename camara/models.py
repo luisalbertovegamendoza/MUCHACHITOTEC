@@ -1,4 +1,6 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
+
 
 
 class Category(models.Model):
@@ -22,7 +24,8 @@ class Producto(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField(default=0)
     disponible = models.BooleanField(default=True)
-    imagen=models.ImageField(upload_to='empleado' , blank=True , null=True)
+    imagen = CloudinaryField('imagen', blank=True, null=True)
+
     
     class Meta:
         verbose_name = 'Producto'
