@@ -61,10 +61,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
     'camara',
     'carrito',
     'contacto',
     'chatbot',
+    
     
     
 ]
@@ -139,6 +142,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -180,8 +190,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #STATIC_ROOT = BASE_DIR / 'staticfiles'  # PARA PRODUCCION
 
 
-MEDIA_URL='/media/'  # PARA IMAGENES
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')   # PARA IMAGENES
+
 
 
 # Default primary key field type
@@ -206,3 +215,4 @@ CSRF_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
