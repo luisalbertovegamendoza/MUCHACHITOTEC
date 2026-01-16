@@ -124,12 +124,17 @@ WSGI_APPLICATION = 'JJTECNOLOGIAEIRL.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+     
+
+
+    'default': dj_database_url.parse(
+        os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
         conn_max_age=600,
-        ssl_require=not DEBUG
     )
+
+  
 }
+
 
 
 
@@ -155,12 +160,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 
-}
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -192,6 +194,11 @@ if DEBUG:
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
 
 
 
@@ -210,6 +217,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+
+
 
 
 LOGIN_REDIRECT_URL = '/'
