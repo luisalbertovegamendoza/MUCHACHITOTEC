@@ -124,16 +124,14 @@ WSGI_APPLICATION = 'JJTECNOLOGIAEIRL.wsgi.application'
 
 
 DATABASES = {
-     
-
-
     'default': dj_database_url.parse(
-        os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
+        os.environ['DATABASE_URL'],  # Usar siempre PostgreSQL
         conn_max_age=600,
     )
-
-  
 }
+
+
+
 
 
 
