@@ -1019,7 +1019,8 @@ button:focus-visible {
 
 
 .brand-location {
-  font-size: 0.75rem;
-  color: #cfd8dc;
+  font-size: 0.6rem;   /* más pequeño que el lema */
+  color: #b0bec5;      /* más suave */
   line-height: 1;
+  margin-top: 2px;
 }
