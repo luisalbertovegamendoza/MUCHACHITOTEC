@@ -990,15 +990,29 @@ button:focus-visible {
 }
 
 /* Fuerza transparencia total */
-.navbar *,
-.navbar *::before,
-.navbar *::after {
+.navbar-nav *,
+.navbar-brand * {
   background: transparent !important;
 }
+
 
 /* Previene recuadro al tocar */
 .navbar-nav .nav-link {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+}
+
+
+
+/* ================================
+   FIX ICONO HAMBURGUESA BOOTSTRAP
+================================ */
+
+.navbar-toggler {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.navbar-toggler-icon {
+  background-image: var(--bs-navbar-toggler-icon-bg) !important;
 }
