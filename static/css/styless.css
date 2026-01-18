@@ -1016,3 +1016,10 @@ button:focus-visible {
 .navbar-toggler-icon {
   background-image: var(--bs-navbar-toggler-icon-bg) !important;
 }
+
+
+.brand-location {
+  font-size: 0.75rem;
+  color: #cfd8dc;
+  line-height: 1;
+}
