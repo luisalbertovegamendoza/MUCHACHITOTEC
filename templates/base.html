@@ -151,10 +151,6 @@
                   required
                 ></textarea>
               </div>
-
-              <button type="submit" class="btn btn-contacto w-100">
-                Enviar mensaje 🚀
-              </button>
             </form>
           </div>
         </div>
@@ -211,6 +207,15 @@
         rows="2"
         placeholder="Escribe tu mensaje..."
       ></textarea>
+
+      <button
+        id="btnEnviarChat"
+        type="button"
+        class="btn btn-primary"
+        style="min-width: 48px"
+      >
+        <i class="fas fa-paper-plane"></i>
+      </button>
     </div>
 
     <script>
@@ -218,6 +223,10 @@
       const chatBtn = document.getElementById("chatBtn");
       const chatMensajes = document.getElementById("chatMensajes");
       const chatInput = document.getElementById("chatInput");
+
+      const btnEnviarChat = document.getElementById("btnEnviarChat");
+
+      btnEnviarChat.addEventListener("click", enviarMensaje);
 
       let chatIniciado = false;
 
